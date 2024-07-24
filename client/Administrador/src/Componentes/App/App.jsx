@@ -1,18 +1,16 @@
-import React,{useEffect,useState} from 'react';
-import './App.css';
 
-import PersonForm from '../Main/PersonForm';
-
+import React from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
+import Main from '../Main/Main';
+import Detail from '../Main/Detail';
 function App() {
-  
   return (
-    <>
     <div className="App">
-      <h1>Product Manager</h1>
-      <PersonForm/>
-    </div>  
-    </>
-  )
+      <BrowserRouter>
+        <Route path="/product/" render={ (routeProps) => <Main {...routeProps} />}/>
+        <Route path="product/:id" render={ (routeProps) => <Detail {...routeProps} />} />
+      </BrowserRouter>
+    </div>
+  );
 }
-
-export default App
+export default App;
