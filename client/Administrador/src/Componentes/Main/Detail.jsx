@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import axios from 'axios';
 export default props => {
     const [product, setProduct] = useState({})
@@ -9,10 +10,14 @@ export default props => {
             }))
     }, [])
     return (
+    
         <div>
             <p>Title: {product.title}</p>
             <p>Price: {product.price}</p>
             <p>Description: {product.description}</p>
+            <Link to={"/products/" + product._id + "/edit"}>
+                Edit
+             </Link>
         </div>
     )
 }

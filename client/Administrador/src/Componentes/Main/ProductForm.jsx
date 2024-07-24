@@ -20,7 +20,7 @@ const ProductForm = ({ onProductAdded }) => {
                 description  
             });  
             console.log(response.data);  
-            onProductAdded(response.data); // Emitir el nuevo producto al componente padre falta crear 
+           
             setSuccess(true); // Indicar que el producto se agregó con éxito  
             // Limpiar el formulario  
             setTitle("");  

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, } from 'react-router-dom';
 import Main from '../Main/Main';
 import Detail from '../Main/Detail';
 function App() {
@@ -9,6 +9,7 @@ function App() {
       <BrowserRouter>
         <Route path="/product/" render={ (routeProps) => <Main {...routeProps} />}/>
         <Route path="product/:id" render={ (routeProps) => <Detail {...routeProps} />} />
+        <Route path="products/:id/edit" render={ (routeProps) => <Update {...routeProps} updateProducts={updatePerson} />}/>
       </BrowserRouter>
     </div>
   );
