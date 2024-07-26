@@ -1,56 +1,39 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import ProductForm from './ProductForm';
+import DeleteButton from './DeleteButton';
+
 export default props => {
     const { id } = props;
-    const [title, setTitle] = useState();
-    const [price, setPrice] = useState();
-    const [description, setDescription]=useState();
+    const [product,setProduct]=useState();
+    const [loaded, setLoaded]=useState(false);
     useEffect(() => {
         axios.get('http://localhost:8000/api/products/' + id)
             .then(res => {
-                setTitle(res.data.title);
-                setPrice(res.data.price);
-                setDescription(res.data.description);
+                setProduct(res.data);
+                setLoaded(true);
+               
             })
     }, [])
-    const updateProduct = e => {
-        e.preventDefault();
-        axios.put('http://localhost:8000/api/products/' + id, {
-            title,
-            price,
-            description
-        })
+    const updateProduct = product => {
+        axios.put('http://localhost:8000/api/products/' + id, product)
             .then(res => console.log(res));
     }
     return (
         <div>
             <h1>Update a Product</h1>
-            <form onSubmit={updateProduct}>
-                <p>
-                    <label htmlFor='title'>Title</label><br />
-                    <input 
-                    type="text" 
-                    name="title" 
-                    value={title} 
-                    onChange={(e) => { setTitle(e.target.value) }} />
-                </p>
-                <p>  
-                <label htmlFor='price'>Price</label><br/>  
-                <input  
-                    type="number"  
-                    name="price"  
-                    value={price}
-                    onChange={(e) => {setPrice(e.target.value) }} />  
-            </p>  
-                <p>
-                    <label htmlFor='description'>Description</label><br />
-                    <input type="text" 
-                    name="description"
-                    value={description} 
-                    onChange={(e) => {setDescription(e.target.value) }} />
-                </p>
-                <input type="submit" />
-            </form>
+          {loaded && (
+            <>
+            <ProductForm
+                onSubmitProp={updateProduct}
+                initialTile={product.title}
+                initialPrice={product.price}
+                initialDescription={product.description}
+            />
+            <DeleteButton  productId={product._id} successCalllback={() => 
+                props.history.push("/products")} />
+            </>
+          )}
         </div>
     )
 }
